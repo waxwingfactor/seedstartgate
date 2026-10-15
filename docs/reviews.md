@@ -17,3 +17,7 @@ An additional agent examined source and reproduced the large-integer defect inde
 The reviewer also found that iCalendar `METHOD:PUBLISH` would require iTIP organizer fields. Standalone snapshot files now omit METHOD, retaining standard all-day VEVENT data, escaped text, octet-correct UTF-8 folding and no alarms. The lead found and corrected a zipapp entrypoint issue so nonzero command returns propagate through SystemExit; the zipapp is exercised with blocked/stale/no-overwrite commands, not only --version.
 
 After the fixes, the independent reviewer reported no remaining correctness blockers. It repeated parser/resource probes, built a copied-source distribution, and installed the wheel in a fresh environment outside the checkout. It recommended permanent regression coverage of all output caps; these cases were added. Exact reviewed revisions and CI evidence are linked from the implementation PR and [verification record](verification.md). Public-artifact and real-calendar-client verification are separate steps.
+
+## Platform test correction
+
+The first CI run found a Windows-only assertion error: os.readlink returns a namespace-prefixed target even when the link is unchanged. The test now captures the original link value and compares it after the rejected command, preserving the no-overwrite requirement. No product behavior changed. Official checkout/setup-python Actions were also moved to pinned v6 revisions after runner deprecation warnings. The corrected full matrix must pass before merge.

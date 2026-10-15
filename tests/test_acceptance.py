@@ -447,9 +447,10 @@ class CLIContractAcceptance(unittest.TestCase):
             raise
         self.assertTrue(destination.is_symlink())
         self.assertFalse(destination.exists())
+        original_link = os.readlink(destination)
         self.cli("check", plan, "example", "2010-01-01", "--out", destination, expected=2)
         self.assertTrue(destination.is_symlink())
-        self.assertEqual(os.readlink(destination), str(target))
+        self.assertEqual(os.readlink(destination), original_link)
         self.assertFalse(target.exists())
 
     def test_invalid_cli_inputs_do_not_publish(self):
