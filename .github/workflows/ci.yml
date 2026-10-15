@@ -1,0 +1,47 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    name: test (${{ matrix.os }}, Python ${{ matrix.python }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ['3.10', '3.14']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install --disable-pip-version-check build==1.3.0 setuptools==80.9.0 wheel==0.45.1
+      - run: python -m build --no-isolation
+      - run: python scripts/build_zipapp.py
+      - name: Install wheel and run independent acceptance tests
+        shell: bash
+        run: |
+          python -m pip install --no-index --no-deps dist/*.whl
+          SEEDSTARTGATE_TEST_INSTALLED=1 python -m unittest discover -s tests -v
+          python -I scripts/installed_smoke.py
+      - name: Install sdist and run installed workflow
+        shell: bash
+        run: |
+          python -m pip uninstall -y seedstartgate
+          python -m pip install --no-build-isolation --no-index --no-deps dist/*.tar.gz
+          python -I scripts/installed_smoke.py
+      - name: Verify standalone zipapp
+        run: python -I scripts/installed_smoke.py dist/seedstartgate.pyz
+  required:
+    if: always()
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every supported platform test
+        env:
+          TEST_RESULT: ${{ needs.test.result }}
+        run: test "$TEST_RESULT" = success

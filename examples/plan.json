@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "name": "Constructed nursery calendar example",
+  "calendars": {
+    "crew": {
+      "coverage_start": "2027-01-01",
+      "coverage_end": "2027-04-30",
+      "weekdays": ["mon", "tue", "wed", "thu", "fri"],
+      "closures": [{"start": "2027-02-15", "end": "2027-02-15", "label": "Example crew closure"}],
+      "extra_open": ["2027-02-13"]
+    }
+  },
+  "protocols": {
+    "demo": {
+      "label": "Example fixed-offset protocol",
+      "source": "Constructed arithmetic fixture; not a species treatment recommendation",
+      "events": [
+        {"id": "start", "day": 0, "action": "Begin approved protocol", "calendar": "crew"},
+        {"id": "transfer", "day": 7, "action": "Perform approved transfer", "calendar": "crew"},
+        {"id": "finish", "day": 30, "action": "Perform final approved handling", "calendar": "crew"}
+      ]
+    }
+  }
+}
