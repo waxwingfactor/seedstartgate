@@ -39,6 +39,9 @@ def parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    if not (3, 10) <= sys.version_info[:2] < (3, 15):
+        print("seedstartgate: supported Python versions are 3.10 through 3.14", file=sys.stderr)
+        return 2
     args = parser().parse_args(argv)
     try:
         if args.command == "init":

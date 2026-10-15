@@ -21,3 +21,7 @@ After the fixes, the independent reviewer reported no remaining correctness bloc
 ## Platform test correction
 
 The first CI run found a Windows-only assertion error: os.readlink returns a namespace-prefixed target even when the link is unchanged. The test now captures the original link value and compares it after the rejected command, preserving the no-overwrite requirement. No product behavior changed. Official checkout/setup-python Actions were also moved to pinned v6 revisions after runner deprecation warnings. The corrected full matrix must pass before merge.
+
+## Distribution boundary check
+
+The lead added the MIT license inside the standalone zipapp and an explicit runtime check for Python 3.10 through 3.14. Wheel metadata already enforces this range; the zipapp now also refuses unsupported interpreters clearly. The system Python 3.9 was used to verify exit 2 with the supported-version message.
