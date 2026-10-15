@@ -29,3 +29,7 @@ The lead added the MIT license inside the standalone zipapp and an explicit runt
 ## Independent whole-product assessment
 
 A separate agent exercised the README commands from an offline-installed wheel in a fresh temporary environment and inspected installation, print worklists, scope and evidence. It caught an invalid constructed research variant: reducing coverage while retaining an out-of-coverage closure would fail input validation. The research now describes a separate incomplete-calendar input with no out-of-range closure; its unknown result matches the contract. This was a documentation correction, not a product change.
+
+## Actual public-release verification
+
+After publication, the source-review agent independently downloaded public wheel, sdist and zipapp assets without authentication and installed them in separate fresh environments outside the checkout. Both distributions passed the 24 published tests and installed workflow; the relocated zipapp passed standard-library-only execution and failure cases. The lead independently repeated public hash/wheel checks and used a separate calendar parser. [Exact revisions, hashes, environments, outcomes and limitations](verification.md) distinguish this release verification from earlier local builds.
