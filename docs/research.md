@@ -60,7 +60,7 @@ A nursery coordinator has an internally approved protocol with an attendance act
 
 All three candidate starts are ordinary staffed weekdays. Checking only the day work begins misses the later conflicts. The compiler reports the affected event and date; it does not move the action to Monday or alter the offset.
 
-If the same calendar is checked only through **2026-12-31**, December 2 is **unknown** because its day-30 event falls beyond coverage. A missing future closure entry cannot be interpreted as permission. Unknown candidates remain in the report, are not exported as known blocked starts, and cause a nonzero screening result. A blocked or unknown `check` produces diagnosis without an executable worklist or action ICS. The operator must verify and extend coverage before rerunning.
+In a separate incomplete-calendar variant, coverage ends on **2026-12-31** and there is no January closure entry (closure entries must be inside checked coverage). December 2 is **unknown** because its day-30 event falls beyond coverage. A missing future closure entry cannot be interpreted as permission. Unknown candidates remain in the report, are not exported as known blocked starts, and cause a nonzero screening result. A blocked or unknown `check` produces diagnosis without an executable worklist or action ICS. The operator must verify and extend coverage before rerunning.
 
 ## Applying Crossing the Chasm selectively
 

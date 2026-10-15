@@ -25,3 +25,7 @@ The first CI run found a Windows-only assertion error: os.readlink returns a nam
 ## Distribution boundary check
 
 The lead added the MIT license inside the standalone zipapp and an explicit runtime check for Python 3.10 through 3.14. Wheel metadata already enforces this range; the zipapp now also refuses unsupported interpreters clearly. The system Python 3.9 was used to verify exit 2 with the supported-version message.
+
+## Independent whole-product assessment
+
+A separate agent exercised the README commands from an offline-installed wheel in a fresh temporary environment and inspected installation, print worklists, scope and evidence. It caught an invalid constructed research variant: reducing coverage while retaining an out-of-coverage closure would fail input validation. The research now describes a separate incomplete-calendar input with no out-of-range closure; its unknown result matches the contract. This was a documentation correction, not a product change.
